@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <textarea style="width: 200px; height: 60px" id="area"></textarea>
+    <textarea
+      style="width: 200px; height: 60px"
+      id="area"
+      placeholder="Write here"
+    ></textarea>
     <br />
     <button id="button">clear</button>
     <script>
@@ -9,6 +13,7 @@
 
       area.oninput = function (e) {
         localStorage.area = e.target.value;
+        // localStorage.setItem('area', area.value)
       };
 
       button.onclick = function (e) {
