@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <textarea style="width: 200px; height: 60px" id="area"></textarea>
+    <br />
+    <button id="button">clear</button>
+    <script>
+      area.value = localStorage.area;
+
+      area.oninput = function (e) {
+        localStorage.area = e.target.value;
+      };
+
+      button.onclick = function (e) {
+        area.value = "";
+        delete localStorage.area;
+      };
+    </script>
+  </body>
+</html>
