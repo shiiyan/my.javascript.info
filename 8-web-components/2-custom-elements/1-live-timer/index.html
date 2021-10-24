@@ -45,7 +45,7 @@
       customElements.define("time-formatted", TimeFormatted);
     </script>
 
-    <time-formatted
+    <!-- <time-formatted
       id="elem"
       year="numeric"
       month="long"
@@ -54,9 +54,39 @@
       minute="numeric"
       second="numeric"
       time-zone-name="short"
-    ></time-formatted>
+    ></time-formatted> -->
     <script>
-      setInterval(() => elem.setAttribute("datetime", new Date()), 1000);
+      //   setInterval(() => elem.setAttribute("datetime", new Date()), 1000);
+    </script>
+    <script>
+      class LiveTimer extends HTMLElement {
+        render() {
+          const timeFormatted = document.createElement("time-formatted");
+          timeFormatted.setAttribute("datetime", new Date());
+          timeFormatted.setAttribute("hour", "numeric");
+          timeFormatted.setAttribute("minute", "numeric");
+          timeFormatted.setAttribute("second", "numeric");
+          this.replaceChildren();
+          this.appendChild(timeFormatted);
+        }
+
+        connectedCallback() {
+          setInterval(() => {
+            this.render();
+            this.dispatchEvent(
+              new CustomEvent("tick", {
+                detail: new Date(),
+              })
+            );
+          }, 1000);
+        }
+      }
+
+      customElements.define("live-timer", LiveTimer);
+    </script>
+    <live-timer id="elem"></live-timer>
+    <script>
+      elem.addEventListener("tick", (event) => console.log(event.detail));
     </script>
   </body>
 </html>
