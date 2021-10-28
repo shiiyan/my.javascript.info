@@ -4,20 +4,27 @@
   <script src="test.js"></script>
   <script>
     async function getUsers(names) {
-      let users = [];
-      for (name of names) {
-        console.log("name: ", name);
-        let response = await fetch(`https://api.github.com/users/${name}`);
-        if (response.ok) {
-          let user = await response.json();
-          users.push(user);
-        } else {
-          users.push(null);
-        }
+      let jobs = [];
+
+      for (let name of names) {
+        let job = fetch(`https://api.github.com/users/${name}`).then(
+          (successResponse) => {
+            if (successResponse.status != 200) {
+              return null;
+            } else {
+              return successResponse.json();
+            }
+          },
+          (failResponse) => {
+            return null;
+          }
+        );
+
+        jobs.push(job);
       }
 
-      console.log(users);
-      return users;
+      let results = await Promise.all(jobs);
+      return results;
     }
   </script>
 </html>
