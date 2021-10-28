@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://en.js.cx/test/libs.js"></script>
+  <script src="test.js"></script>
+  <script>
+    async function getUsers(names) {
+      let users = [];
+      for (name of names) {
+        console.log("name: ", name);
+        let response = await fetch(`https://api.github.com/users/${name}`);
+        if (response.ok) {
+          let user = await response.json();
+          users.push(user);
+        } else {
+          users.push(null);
+        }
+      }
+
+      console.log(users);
+      return users;
+    }
+  </script>
+</html>
